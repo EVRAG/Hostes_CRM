@@ -1,0 +1,146 @@
+{
+  "info": {
+    "_postman_id": "a8e1c9ea-2c1c-4f5e-9d1b-collection-crm",
+    "name": "Restaurant CRM API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Postman collection for Restaurant CRM backend (FastAPI)."
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login (get JWT)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"password123\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  const json = pm.response.json();",
+                  "  if (json.access_token) { pm.environment.set('token', json.access_token); }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Bookings",
+      "item": [
+        {
+          "name": "Get slots by date",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/bookings/{{restaurantId}}/{{date}}", "host": ["{{baseUrl}}"], "path": ["bookings", "{{restaurantId}}", "{{date}}"] }
+          }
+        },
+        {
+          "name": "Create booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{baseUrl}}/bookings", "host": ["{{baseUrl}}"], "path": ["bookings"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"restaurant_id\": {{restaurantId}},\n  \"date\": \"{{date}}\",\n  \"time_slot\": \"18:00\",\n  \"client_name\": \"Иван Иванов\",\n  \"start_time\": \"18:00\",\n  \"end_time\": \"20:00\",\n  \"phone\": \"+7 (915) 123-45-67\",\n  \"guest_count\": 4,\n  \"comment\": \"Окно у окна\",\n  \"tags\": [\"Парковка\"],\n  \"deposit\": false\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Restaurant Settings",
+      "item": [
+        {
+          "name": "Get settings",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/restaurants/{{restaurantId}}/settings", "host": ["{{baseUrl}}"], "path": ["restaurants", "{{restaurantId}}", "settings"] }
+          }
+        },
+        {
+          "name": "Update settings",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{baseUrl}}/restaurants/{{restaurantId}}/settings", "host": ["{{baseUrl}}"], "path": ["restaurants", "{{restaurantId}}", "settings"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"host_choice\": \"Анна\",\n  \"greeting_text\": \"Добро пожаловать!\",\n  \"info_text\": \"Мы находимся в центре города.\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Assistants (OpenAI)",
+      "item": [
+        {
+          "name": "Chat (single message)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{baseUrl}}/assistants/chat", "host": ["{{baseUrl}}"], "path": ["assistants", "chat"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assistant_id\": \"{{assistantId}}\",\n  \"message\": \"Привет!\",\n  \"thread_id\": {{#threadId}}\"{{threadId}}\"{{/threadId}}{{^threadId}}null{{/threadId}}\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  const json = pm.response.json();",
+                  "  if (json.thread_id) { pm.environment.set('threadId', json.thread_id); }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8000" },
+    { "key": "restaurantId", "value": "1" },
+    { "key": "date", "value": "2025-01-01" },
+    { "key": "assistantId", "value": "asst_vitxwiKAOhWiFHgynXl07lzT" },
+    { "key": "threadId", "value": "" },
+    { "key": "token", "value": "" }
+  ]
+}
+
