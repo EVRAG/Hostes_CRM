@@ -1,5 +1,5 @@
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function Layout() {
   const navigate = useNavigate()
@@ -9,6 +9,15 @@ export default function Layout() {
     localStorage.removeItem('token')
     navigate('/login')
   }
+
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [open])
 
   const Nav = (
     <>
@@ -42,7 +51,7 @@ export default function Layout() {
       {open && (
         <div className="md:hidden fixed inset-0 z-50">
           <div className="absolute inset-0 bg-black/30" onClick={() => setOpen(false)} />
-          <div className="absolute left-0 top-0 bottom-0 w-72 bg-white border-r border-gray-200 p-6">
+          <div className="absolute left-0 top-0 bottom-0 w-72 bg-white border-r border-gray-200 p-6 overflow-y-auto">
             <div className="mb-6 flex items-center justify-between">
               <Link to="/" className="text-xl font-semibold" onClick={() => setOpen(false)}>CRM</Link>
               <button className="px-2 py-1 rounded-md border hover:bg-gray-50" onClick={() => setOpen(false)}>✕</button>

@@ -27,10 +27,12 @@ body {
 }
 
 .modal-backdrop {
-  @apply fixed inset-0 bg-black/30 flex items-center justify-center z-50;
+  @apply fixed inset-0 bg-black/30 flex items-start md:items-center justify-center z-50 p-4 overflow-y-auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal {
-  @apply bg-white rounded-lg p-6 w-full max-w-4xl shadow-lg;
+  @apply bg-white rounded-lg p-6 w-full max-w-4xl shadow-lg max-h-[90vh] overflow-y-auto;
+  -webkit-overflow-scrolling: touch;
 }
 

@@ -122,9 +122,10 @@ export default function BookingsPage() {
       </div>
 
       {modalOpen && (
-        <div className="modal-backdrop">
-          <div className="modal">
-            <h3 className="text-lg font-semibold mb-4">Создание брони</h3>
+        <div className="modal-backdrop" onClick={() => setModalOpen(false)}>
+          <div className="modal relative" role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()}>
+            <button aria-label="Закрыть" className="absolute top-3 right-3 px-2 py-1 rounded-md border hover:bg-gray-50" onClick={() => setModalOpen(false)}>✕</button>
+            <h3 className="text-lg font-semibold mb-4 pr-8">Создание брони</h3>
             <div className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
@@ -185,7 +186,7 @@ export default function BookingsPage() {
                 </div>
               </div>
 
-              <div className="flex gap-2 justify-end pt-2">
+              <div className="flex gap-2 justify-end pt-2 sticky bottom-0 bg-white pb-0">
                 <button className="px-4 py-2 rounded-md border" onClick={() => setModalOpen(false)}>Отмена</button>
                 <button className="btn" onClick={createBooking} disabled={!clientName}>Добавить</button>
               </div>
