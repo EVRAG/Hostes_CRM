@@ -25,6 +25,8 @@ export default function Layout() {
         <NavLink to="/bookings" onClick={() => setOpen(false)} className={({isActive}) => `block px-3 py-2 rounded-md ${isActive ? 'bg-gray-100' : 'hover:bg-gray-100'}`}>Бронирования</NavLink>
         <NavLink to="/settings" onClick={() => setOpen(false)} className={({isActive}) => `block px-3 py-2 rounded-md ${isActive ? 'bg-gray-100' : 'hover:bg-gray-100'}`}>Настройки</NavLink>
         <NavLink to="/dashboard" onClick={() => setOpen(false)} className={({isActive}) => `block px-3 py-2 rounded-md ${isActive ? 'bg-gray-100' : 'hover:bg-gray-100'}`}>Дашборд</NavLink>
+        <NavLink to="/clients" onClick={() => setOpen(false)} className={({isActive}) => `block px-3 py-2 rounded-md ${isActive ? 'bg-gray-100' : 'hover:bg-gray-100'}`}>Клиенты</NavLink>
+        <NavLink to="/finance" onClick={() => setOpen(false)} className={({isActive}) => `block px-3 py-2 rounded-md ${isActive ? 'bg-gray-100' : 'hover:bg-gray-100'}`}>Финансы</NavLink>
       </nav>
       <button onClick={logout} className="btn mt-8 w-full">Выйти</button>
     </>

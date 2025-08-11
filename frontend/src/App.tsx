@@ -3,6 +3,8 @@ import LoginPage from './pages/Login'
 import BookingsPage from './pages/Bookings'
 import SettingsPage from './pages/Settings'
 import DashboardPage from './pages/Dashboard'
+import FinancePage from './pages/Finance'
+import ClientsPage from './pages/Clients'
 import Layout from './components/Layout'
 
 function ProtectedRoute({ children }: { children: JSX.Element }) {
@@ -27,6 +29,8 @@ export default function App() {
         <Route path="bookings" element={<BookingsPage />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="dashboard" element={<DashboardPage />} />
+        <Route path="finance" element={<FinancePage />} />
+        <Route path="clients" element={<ClientsPage />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
